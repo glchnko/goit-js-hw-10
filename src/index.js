@@ -1,5 +1,6 @@
 import './css/styles.css';
 import { fetchCountries } from './js/fetchCountries.js';
+import { createMarkupList, createMarkup } from './js/markup.js';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import debounce from 'lodash.debounce';
 
@@ -26,7 +27,28 @@ function onInput(e) {
     console.log(fetchCountries(value));
 }
 
+function onNameCountry(name){
+    refs.list.innerHTML = createMarkupList(name);
+    if(name.length > 10){
+        Notify.info('Too many matches found. Please enter a more specific name.');
+        onClean();
+    }
+
+    if(name.length > 1 && name.length <= 10){
+        refs.countryInf.innerHTML = '';
+    }
+    
+
+    if(name.length === 1){
+        refs.list.innerHTML = '';
+        refs.countryInf.innerHTML = createMarkup(name);
+        
+    }
+
+}
+
 function error() {
     Notify.failure('Oops, there is no country with that name');
     onClean();
   }
+
