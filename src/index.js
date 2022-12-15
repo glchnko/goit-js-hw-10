@@ -13,34 +13,37 @@ const refs = {
 
 refs.input.addEventListener('input' , debounce(onInput, DEBOUNCE_DELAY));
 
+function onClear(){
+    refs.input.innerHTML = '';
+    refs.countryInf.innerHTML = '';
+}
+
 function onInput(e){
     const trimValue = e.target.value.trim();
     if (trimValue < 1) {
         Notify.warning('Please, specify country');
+        return;
     }
     fetchCountries(trimValue)
     .then(onRenderMarcup)
-    .catch(onError);
+    .catch(onError)
 }
 
 
   function onRenderMarcup(countries){
     if (countries.length > 10) {
         Notify.info('Too many matches found. Please, enter a more specific name.');
+        onClear();
       } else if (countries.length > 1) {
         refs.list.innerHTML = onMarkupList(countries);
       } else {
         refs.list.innerHTML = onMarkupInfo(countries);
+        refs.list.innerHTML = '';
         
       }
 
   }
 
-
-   function onClear(){
-    refs.input.innerHTML = '';
-    refs.countryInf.innerHTML = '';
-}
    
     function onError(){
         Notify.failure('Oops, there is no country with that name');
