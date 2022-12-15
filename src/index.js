@@ -31,13 +31,14 @@ function onInput(e){
 
 
   function onRenderMarcup(countries){
+    refs.list.innerHTML = onMarkupList(countries);
     if (countries.length > 10) {
         Notify.info('Too many matches found. Please, enter a more specific name.');
         onClear();
       } else if (countries.length > 1) {
         refs.list.innerHTML = onMarkupList(countries);
       } else {
-        refs.list.innerHTML = onMarkupInfo(countries);
+        refs.countryInf.innerHTML = onMarkupInfo(countries);
         refs.list.innerHTML = '';
         
       }
@@ -55,7 +56,7 @@ function onMarkupList(countriesArr) {
     return countriesArr
     .map(({name , flags}) => {
         return `<li class="list-item" data-name="${name.official}">
-        <img class = "list-item__image" src="${flags.svg}" alt="flag of ${name.official} width="15px"/>
+        <img class = "list-item__image" src="${flags.svg}" alt="flag of ${name.official} width="15px height="23"/>
         <p class = "list-item__name">${name.official}</p>
         </li>`;
       })
@@ -67,7 +68,7 @@ function onMarkupInfo(countriesArr) {
     .map(({name,capital,population,flags,languages}) => {
       const langs = Object.values(languages);
       return `<div class="country-info__header">
-      <img class="country-info__image" src="${flags.svg}" alt="flag of ${name.official}" width="30px"/>
+      <img class="country-info__image" src="${flags.svg}" alt="flag of ${name.official}" width="30px height="24"/>
       <h2 class="country-info__name">${name.official}</h2></div>
       <p class="country-info__title"><span>Capital: </span>${capital}</p>
       <p class="country-info__title"><span>Population: </span>${population}</p>
