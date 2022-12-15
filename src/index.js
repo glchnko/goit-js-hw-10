@@ -14,7 +14,6 @@ const refs = {
 refs.input.addEventListener('input' , debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput(e){
-    onClear();
     const trimValue = e.target.value.trim();
     if (trimValue < 1) {
         Notify.warning('Please, specify country');
